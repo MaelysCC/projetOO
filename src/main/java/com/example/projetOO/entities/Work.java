@@ -1,10 +1,8 @@
 package com.example.projetOO.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.*;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 
 @Entity
 public class Work {
@@ -15,9 +13,12 @@ public class Work {
     private Long id;
 
     private String title;
-    private WorkType type;
     private String author;
     private String description;
+
+    @Enumerated(EnumType.STRING)
+    private WorkType type;
+    @Enumerated(EnumType.STRING)
     private Status status;
 
     public Work() {

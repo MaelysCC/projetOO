@@ -1,11 +1,8 @@
 package com.example.projetOO.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.*;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 
 @Entity
 public class Entry {
@@ -21,6 +18,7 @@ public class Entry {
     @ManyToOne
     private Work work;
 
+    @Enumerated(EnumType.STRING)
     private Status status;
     private int currentChapter;
     private int rating;
