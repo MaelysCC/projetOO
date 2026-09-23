@@ -51,6 +51,22 @@ public class ListService {
         return listRepository.save(entry);
     }
 
+    public Entry updateRating(Long entryId, int rating) {
+        Entry entry = listRepository.findById(entryId)
+                .orElseThrow(() -> new RessourceNotFoundExeption("Entry not found"));
+
+        entry.setRating(rating);
+        return listRepository.save(entry);
+    }
+
+    public Entry updateStatus(Long entryId, Status status) {
+        Entry entry = listRepository.findById(entryId)
+                .orElseThrow(() -> new RessourceNotFoundExeption("Entry not found"));
+
+        entry.setStatus(status);
+        return listRepository.save(entry);
+    }
+
     public void deleteEntry(Long entryId) {
         Entry entry = listRepository.findById(entryId)
                 .orElseThrow(() -> new RessourceNotFoundExeption("Entry not found"));
