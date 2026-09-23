@@ -7,7 +7,8 @@ import java.util.List;
 import com.example.projetOO.exeptions.RessourceNotFoundExeption;
 import com.example.projetOO.repository.WorkRepository;
 import com.example.projetOO.entities.Work;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Service
 public class WorkService {
@@ -22,6 +23,8 @@ public class WorkService {
     public List<Work> getAllWork(){return workRepository.findAll();}
     public Work getWork(Long id){return workRepository.findById(id)
             .orElseThrow(() -> new RessourceNotFoundExeption("Work not found "+id));}
+
+
 
     public Work createWork(Work work){return workRepository.save(work);}
     public Work updateWork (Long id, Work newwork){

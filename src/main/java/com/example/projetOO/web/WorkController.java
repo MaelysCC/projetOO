@@ -16,7 +16,7 @@ public class WorkController {
     }
 
     @GetMapping
-    public List<Work> getWorks() {return workService.getAllWorks();}
+    public List<Work> getWorks() {return workService.getAllWork();}
 
     @GetMapping("/{id}")
     public Work getWork(@PathVariable Long id) {return workService.getWork(id);}
