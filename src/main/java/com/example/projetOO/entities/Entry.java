@@ -25,10 +25,10 @@ public class Entry {
     private int currentChapter;
     private int rating;
 
-    public ListEntry() {
+    public Entry() {
     }
 
-    public ListEntry(User user, Work work, Status status, int currentChapter, int rating) {
+    public Entry(User user, Work work, Status status, int currentChapter, int rating) {
         this.user = user;
         this.work = work;
         this.status = status;
