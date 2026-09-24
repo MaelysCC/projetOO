@@ -27,6 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest(classes = RpcServiceServerApplication.class, webEnvironment = SpringBootTest.WebEnvironment.NONE)
 class SeriesTrackerGrpcServiceIntegrationTest {
@@ -46,6 +47,9 @@ class SeriesTrackerGrpcServiceIntegrationTest {
 
     @Test
     void restApiUsesGrpcForWorkUserAndEntryOperations() throws Exception {
+        assertTrue(client.listWorks(Empty.getDefaultInstance()).getItemsList().stream()
+                .anyMatch(item -> item.getTitle().equals("Solo Leveling")));
+
         User user = client.createUser(User.newBuilder().setUsername("rpc-test").setEmail("rpc-test@example.com").build());
         assertNotEquals(0, user.getId());
         assertEquals(user.getId(), client.getUser(IdRequest.newBuilder().setId(user.getId()).build()).getId());
@@ -55,14 +59,15 @@ class SeriesTrackerGrpcServiceIntegrationTest {
                 .setStatus("ONGOING").build());
         assertNotEquals(0, work.getId());
         assertEquals(work.getId(), client.getWork(IdRequest.newBuilder().setId(work.getId()).build()).getId());
-        assertEquals(work.getId(), client.listWorks(Empty.getDefaultInstance()).getItems(0).getId());
+        assertTrue(client.listWorks(Empty.getDefaultInstance()).getItemsList().stream()
+                .anyMatch(item -> item.getId() == work.getId()));
 
         GrpcRestService restService = new GrpcRestService(client);
         MockMvc restApi = MockMvcBuilders.standaloneSetup(new WorkController(restService),
                         new UserController(restService), new ListController(restService))
                 .setControllerAdvice(new GlobalExceptionHandler()).build();
-        restApi.perform(get("/works")).andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].id").value(work.getId()));
+        restApi.perform(get("/works/{id}", work.getId())).andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(work.getId()));
         restApi.perform(get("/users/" + user.getId())).andExpect(status().isOk())
                 .andExpect(jsonPath("$.email").value("rpc-test@example.com"));
 
