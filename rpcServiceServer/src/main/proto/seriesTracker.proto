@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.example.projetOO.rpc";
+option java_outer_classname = "SeriesTrackerProto";
+
+package seriestracker;
+
+service SeriesTrackerService {
+  rpc ListWorks (Empty) returns (WorkList);
+  rpc GetWork (IdRequest) returns (Work);
+  rpc CreateWork (Work) returns (Work);
+  rpc UpdateWork (Work) returns (Work);
+  rpc DeleteWork (IdRequest) returns (Empty);
+  rpc ListUsers (Empty) returns (UserList);
+  rpc GetUser (IdRequest) returns (User);
+  rpc CreateUser (User) returns (User);
+  rpc UpdateUser (User) returns (User);
+  rpc DeleteUser (IdRequest) returns (Empty);
+  rpc ListEntries (UserEntriesRequest) returns (EntryList);
+  rpc GetEntry (IdRequest) returns (Entry);
+  rpc SaveEntry (Entry) returns (Entry);
+  rpc DeleteEntry (IdRequest) returns (Empty);
+}
+
+message Empty {}
+message IdRequest { int64 id = 1; }
+message UserEntriesRequest { int64 user_id = 1; }
+message Work {
+  int64 id = 1;
+  string title = 2;
+  string type = 3;
+  string author = 4;
+  string description = 5;
+  string status = 6;
+}
+message WorkList { repeated Work items = 1; }
+message User { int64 id = 1; string username = 2; string email = 3; }
+message UserList { repeated User items = 1; }
+message Entry {
+  int64 id = 1;
+  int64 user_id = 2;
+  int64 work_id = 3;
+  string status = 4;
+  int32 current_chapter = 5;
+  int32 rating = 6;
+}
+message EntryList { repeated Entry items = 1; }

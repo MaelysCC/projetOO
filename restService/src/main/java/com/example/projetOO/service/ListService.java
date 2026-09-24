@@ -43,6 +43,11 @@ public class ListService {
         return listRepository.save(entry);
     }
 
+    public Entry getEntry(Long entryId) {
+        return listRepository.findById(entryId)
+                .orElseThrow(() -> new RessourceNotFoundExeption("Entry not found " + entryId));
+    }
+
     public Entry updateProgress(Long entryId, int chapter) {
         Entry entry = listRepository.findById(entryId)
                 .orElseThrow(() -> new RessourceNotFoundExeption("Entry not found"));

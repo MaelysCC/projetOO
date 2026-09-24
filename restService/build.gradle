@@ -1,0 +1,63 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '4.1.1'
+	id 'io.spring.dependency-management' version '1.1.7'
+	id 'com.google.protobuf' version '0.9.4'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(25)
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation enforcedPlatform('io.grpc:grpc-bom:1.83.1')
+
+	// REST / Web
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	// JPA / database
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'io.grpc:grpc-netty-shaded:1.83.1'
+	implementation 'io.grpc:grpc-protobuf:1.83.1'
+	implementation 'io.grpc:grpc-stub:1.83.1'
+	compileOnly 'jakarta.annotation:jakarta.annotation-api:2.1.1'
+
+	// H2 database
+	runtimeOnly 'com.h2database:h2'
+
+	// Tests
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+sourceSets {
+	main {
+		proto {
+			srcDir '../rpcServiceServer/src/main/proto'
+		}
+	}
+}
+
+protobuf {
+	protoc { artifact = 'com.google.protobuf:protoc:3.25.5' }
+	plugins { grpc { artifact = 'io.grpc:protoc-gen-grpc-java:1.83.1' } }
+	generateProtoTasks { all()*.plugins { grpc {} } }
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+tasks.named('jar') {
+	archiveClassifier = 'plain'
+}
+

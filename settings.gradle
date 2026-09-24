@@ -1,1 +1,2 @@
 rootProject.name = 'projetOO'
+include 'restService', 'rpcServiceServer'
