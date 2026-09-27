@@ -33,5 +33,9 @@ out/
 /nbdist/
 /.nb-gradle/
 
+### Vue client ###
+client/node_modules/
+client/dist/
+
 ### VS Code ###
 .vscode/

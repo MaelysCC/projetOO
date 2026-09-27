@@ -40,8 +40,11 @@ Start the Vue.js client in another terminal:
 
 ```powershell
 cd client
-npm install
 npm run dev
 ```
 
 The Vue.js development server listens on `5173`; the REST API listens on `8080`; gRPC listens on `9090`. Run backend tests from the repository root with `.\gradlew.bat test`.
+
+## Github
+
+The project can be found on Github susing this url: 
