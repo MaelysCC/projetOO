@@ -47,4 +47,4 @@ The Vue.js development server listens on `5173`; the REST API listens on `8080`;
 
 ## Github
 
-The project can be found on Github susing this url: https://github.com/MaelysCC/projetOO
+The project can be found on Github using this url: https://github.com/MaelysCC/projetOO
